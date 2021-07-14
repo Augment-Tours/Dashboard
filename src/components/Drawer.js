@@ -14,4 +14,4 @@ export default function TemporaryDrawer() {
   
       setState({ ...state, [anchor]: open });
     };
-    
+  }

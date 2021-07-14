@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react';
-import bugFilled from '@iconify/icons-ant-design/bug-filled';
+import userOutlined from '@iconify/icons-ant-design/user-outlined';
 // material
 import { alpha, experimentalStyled as styled } from '@material-ui/core/styles';
 import { Card, Typography } from '@material-ui/core';
@@ -40,11 +40,11 @@ export default function AppBugReports() {
   return (
     <RootStyle>
       <IconWrapperStyle>
-        <Icon icon={bugFilled} width={24} height={24} />
+        <Icon icon={userOutlined} width={24} height={24} />
       </IconWrapperStyle>
       <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Bug Reports
+        Number of Users
       </Typography>
     </RootStyle>
   );

@@ -36,8 +36,8 @@ import { getAllMuseums } from './request/museum';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Museum Name', alignRight: false },
-  { id: 'description', label: 'Description', alignRight: false },
+  { id: 'name', label: 'Target Image Name', alignRight: false },
+  { id: 'description', label: 'Information', alignRight: false },
   { id: 'location', label: 'Location', alignRight: false }
 ];
 
@@ -151,7 +151,7 @@ export default function Museum() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Museum
+            Target Image
           </Typography>
           <Button
             variant="contained"
@@ -160,7 +160,7 @@ export default function Museum() {
             onClick={toggleDrawer}
             startIcon={<Icon icon={plusFill} />}
           >
-            New Museum
+            New Target Image
           </Button>
         </Stack>
 
@@ -265,16 +265,20 @@ export default function Museum() {
             sx={{ px: 1, py: 2 }}
           >
             <Typography variant="subtitle1" sx={{ ml: 1 }}>
-              Add Museum
+              Add Target Image
             </Typography>
             <IconButton onClick={toggleDrawer}>
               <Icon icon={closeFill} width={20} height={20} />
             </IconButton>
           </Stack>
-          <TextField fullWidth label="Museum" style={{ marginBottom: '15px' }} />
-          <TextField fullWidth label="Description" style={{ marginBottom: '15px' }} />
+          <TextField fullWidth label="ID" style={{ marginBottom: '15px' }} />
+          <TextField fullWidth label="Museum ID" style={{ marginBottom: '15px' }} />
+          <TextField fullWidth label="Information" style={{ marginBottom: '15px' }} />
+          <TextField fullWidth label="Floor" type="number" style={{ marginBottom: '15px' }} />
+          <TextField fullWidth label="X Location" type="number" style={{ marginBottom: '15px' }} />
+          <TextField fullWidth label="Y Location" type="number" style={{ marginBottom: '15px' }} />
           <Button variant="contained" component="label" style={{ marginBottom: '40px' }}>
-            Upload File
+            Upload Image
             <input type="file" hidden />
           </Button>
 

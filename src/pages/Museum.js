@@ -271,10 +271,11 @@ export default function Museum() {
               <Icon icon={closeFill} width={20} height={20} />
             </IconButton>
           </Stack>
-          <TextField fullWidth label="Museum" style={{ marginBottom: '15px' }} />
+          <TextField fullWidth label="ID" style={{ marginBottom: '15px' }} />
+          <TextField fullWidth label="Museum Name" style={{ marginBottom: '15px' }} />
           <TextField fullWidth label="Description" style={{ marginBottom: '15px' }} />
           <Button variant="contained" component="label" style={{ marginBottom: '40px' }}>
-            Upload File
+            Upload Image
             <input type="file" hidden />
           </Button>
 
