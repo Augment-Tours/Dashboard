@@ -10,4 +10,9 @@ const getAllMuseums = async (pageNo) => {
     });
 };
 
-export { getAllMuseums };
+const createMuseum = async (name, description, image) => {
+  const url = 'http://localhost:3000/museums/';
+  return axios.post(url, { name, description, image });
+};
+
+export { getAllMuseums, createMuseum };
