@@ -142,9 +142,9 @@ export default function Museum() {
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - museumList.length) : 0;
 
-  const filteredUsers = applySortFilter(museumList, getComparator(order, orderBy), filterName);
+  const filteredMuseums = applySortFilter(museumList, getComparator(order, orderBy), filterName);
 
-  const isUserNotFound = filteredUsers.length === 0;
+  const isUserNotFound = filteredMuseums.length === 0;
 
   const toggleDrawer = () => {
     setIsOpenFilter(!isOpenFilter);
@@ -188,7 +188,7 @@ export default function Museum() {
                   onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
-                  {filteredUsers
+                  {filteredMuseums
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
                       const { id, name, description, image } = row;
