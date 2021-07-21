@@ -31,14 +31,17 @@ import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dashboard/user';
 //
-// import USERLIST from '../_mocks_/user';
-import { getAllMuseums } from './request/museum';
+// import ARMODELLIST from '../_mocks_/user';
+import { getAllArModels } from './request/armodel';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Museum Name', alignRight: false },
+  { id: 'name', label: 'Model Name', alignRight: false },
   { id: 'description', label: 'Description', alignRight: false },
-  { id: 'location', label: 'Location', alignRight: false }
+  { id: 'model', label: 'Model', alignRight: false },
+  { id: 'x_location', label: 'X-Location', alignRight: false },
+  { id: 'y_location', label: 'Y-Location', alignRight: false },
+  { id: 'floor', label: 'Floor', alignRight: false },
 ];
 
 // ----------------------------------------------------------------------
@@ -72,7 +75,7 @@ function applySortFilter(array, comparator, query) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function Museum() {
+export default function ArModel() {
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
   const [selected, setSelected] = useState([]);
@@ -80,15 +83,18 @@ export default function Museum() {
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [isOpenFilter, setIsOpenFilter] = useState(false);
-  const [museumList, setMuseumList] = useState([]);
+  const [arModelList, setArModelList] = useState([]);
 
   useEffect(() => {
-    const museumList = getAllMuseums(1).then((res) => {
+      const arModelList = getAllArModels(1).then((res) => {
       console.log(res);
-      setMuseumList(res);
+      setArModelList(res);
     });
-    console.log(museumList);
+
+    console.log(arModelList);
   }, []);
+
+
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -98,7 +104,7 @@ export default function Museum() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = museumList.map((n) => n.name);
+      const newSelecteds = arModelList.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -136,22 +142,22 @@ export default function Museum() {
     setFilterName(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - museumList.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - arModelList.length) : 0;
 
-  const filteredUsers = applySortFilter(museumList, getComparator(order, orderBy), filterName);
+  const filteredModels = applySortFilter(arModelList, getComparator(order, orderBy), filterName);
 
-  const isUserNotFound = filteredUsers.length === 0;
+  const isUserNotFound = filteredModels.length === 0;
 
   const toggleDrawer = () => {
     setIsOpenFilter(!isOpenFilter);
   };
 
   return (
-    <Page title="Museums | Augment-Tours">
+    <Page title="AR Models | Augment-Tours">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Museum
+            AR Model
           </Typography>
           <Button
             variant="contained"
@@ -160,7 +166,7 @@ export default function Museum() {
             onClick={toggleDrawer}
             startIcon={<Icon icon={plusFill} />}
           >
-            New Museum
+            New AR Model
           </Button>
         </Stack>
 
@@ -178,13 +184,13 @@ export default function Museum() {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={museumList.length}
+                  rowCount={arModelList.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
-                  {filteredUsers
+                  {filteredModels
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
                       const { id, name, description, image } = row;
@@ -243,7 +249,7 @@ export default function Museum() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={museumList.length}
+            count={arModelList.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -265,7 +271,7 @@ export default function Museum() {
             sx={{ px: 1, py: 2 }}
           >
             <Typography variant="subtitle1" sx={{ ml: 1 }}>
-              Add Museum
+              Add AR Model
             </Typography>
             <IconButton onClick={toggleDrawer}>
               <Icon icon={closeFill} width={20} height={20} />
