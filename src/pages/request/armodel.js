@@ -10,4 +10,9 @@ const getAllArModels = async (pageNo) => {
       });
   };
 
-export { getAllArModels };
+const createArModel = async (name, description, image) => {
+  const url = 'http://localhost:3000/armodels/';
+  return axios.post(url, { name, description, model, x_location, y_location, floor });
+};
+
+export { getAllArModels, createArModel };

@@ -88,8 +88,10 @@ export default function ArModel() {
   useEffect(() => {
       const arModelList = getAllArModels(1).then((res) => {
       console.log(res);
-      setArModelList(res);
-    });
+      if(Array.isArray(res)){
+        setArModelList(res);
+      }
+    }).catch(err=>console.log(err));
 
     console.log(arModelList);
   }, []);
@@ -277,7 +279,7 @@ export default function ArModel() {
               <Icon icon={closeFill} width={20} height={20} />
             </IconButton>
           </Stack>
-          <TextField fullWidth label="Museum" style={{ marginBottom: '15px' }} />
+          <TextField fullWidth label="AR Model" style={{ marginBottom: '15px' }} />
           <TextField fullWidth label="Description" style={{ marginBottom: '15px' }} />
           <Button variant="contained" component="label" style={{ marginBottom: '40px' }}>
             Upload File
