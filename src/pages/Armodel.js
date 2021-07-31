@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { filter } from 'lodash';
 import { Icon } from '@iconify/react';
 // import { sentenceCase } from 'change-case';
@@ -41,7 +42,7 @@ const TABLE_HEAD = [
   { id: 'model', label: 'Model', alignRight: false },
   { id: 'x_location', label: 'X-Location', alignRight: false },
   { id: 'y_location', label: 'Y-Location', alignRight: false },
-  { id: 'floor', label: 'Floor', alignRight: false },
+  { id: 'floor', label: 'Floor', alignRight: false }
 ];
 
 // ----------------------------------------------------------------------
@@ -86,15 +87,13 @@ export default function ArModel() {
   const [arModelList, setArModelList] = useState([]);
 
   useEffect(() => {
-      const arModelList = getAllArModels(1).then((res) => {
+    const arModelList = getAllArModels(1).then((res) => {
       console.log(res);
       setArModelList(res);
     });
 
     console.log(arModelList);
   }, []);
-
-
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -193,7 +192,7 @@ export default function ArModel() {
                   {filteredModels
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { id, name, description, image } = row;
+                      const { id, name, description, x_location, y_location, model, floor } = row;
                       const isItemSelected = selected.indexOf(name) !== -1;
 
                       return (
@@ -211,16 +210,22 @@ export default function ArModel() {
                               onChange={(event) => handleClick(event, name)}
                             />
                           </TableCell>
-                          <TableCell component="th" scope="row" padding="none">
+                          {/* <TableCell component="th" scope="row" padding="none">
                             <Stack direction="row" alignItems="center" spacing={2}>
                               <Avatar alt={name} src={image} />
                               <Typography variant="subtitle2" noWrap>
                                 {name}
                               </Typography>
                             </Stack>
-                          </TableCell>
+                          </TableCell> */}
+                          <TableCell align="left">{name}</TableCell>
                           <TableCell align="left">{description}</TableCell>
-                          <TableCell align="left">Test Location</TableCell>
+                          <TableCell align="left">
+                            <a href={model}>Link</a>
+                          </TableCell>
+                          <TableCell align="left">{x_location}</TableCell>
+                          <TableCell align="left">{y_location}</TableCell>
+                          <TableCell align="left">{floor}</TableCell>
                           <TableCell align="right">
                             <UserMoreMenu />
                           </TableCell>
