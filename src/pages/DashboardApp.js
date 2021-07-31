@@ -3,18 +3,10 @@ import { Box, Grid, Container, Typography } from '@material-ui/core';
 // components
 import Page from '../components/Page';
 import {
-  AppTasks,
   AppNewUsers,
   AppBugReports,
   AppItemOrders,
-  AppNewsUpdate,
-  AppWeeklySales,
-  AppOrderTimeline,
-  AppCurrentVisits,
-  AppWebsiteVisits,
-  AppTrafficBySite,
-  AppCurrentSubject,
-  AppConversionRates
+  AppWeeklySales
 } from '../components/_dashboard/app';
 
 // ----------------------------------------------------------------------
@@ -39,7 +31,6 @@ export default function DashboardApp() {
           <Grid item xs={12} sm={6} md={3}>
             <AppBugReports />
           </Grid>
-
         </Grid>
       </Container>
     </Page>

@@ -38,7 +38,7 @@ import { getAllTargets, createTargetImage } from './request/target';
 const TABLE_HEAD = [
   { id: 'name', label: 'Target Image Info', alignRight: false },
   { id: 'description', label: 'Description', alignRight: false },
-  { id: 'floor', label: 'Floor', alignRight: false },
+  { id: 'floor', label: 'Floor', alignRight: false }
 ];
 
 // ----------------------------------------------------------------------
