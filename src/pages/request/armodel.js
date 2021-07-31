@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import axios from 'axios';
 
 const getAllArModels = async (pageNo) => {
@@ -11,7 +12,7 @@ const getAllArModels = async (pageNo) => {
 };
 
 
-const createArModel = async (name, description, image) => {
+const createArModel = async (name, description, model, x_location, y_location, floor) => {
   const url = 'http://localhost:3000/armodels/';
   return axios.post(url, { name, description, model, x_location, y_location, floor });
 };

@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { filter } from 'lodash';
 import { Icon } from '@iconify/react';
 // import { sentenceCase } from 'change-case';
@@ -33,7 +32,7 @@ import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dashboard/user';
 //
 // import ARMODELLIST from '../_mocks_/user';
-import { getAllArModels } from './request/armodel';
+import { getAllArModels, createArModel } from './request/armodel';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
@@ -86,8 +85,15 @@ export default function ArModel() {
   const [isOpenFilter, setIsOpenFilter] = useState(false);
   const [arModelList, setArModelList] = useState([]);
 
+  const [modelName, setModelName] = useState('');
+  const [modelDescription, setModelDescription] = useState('');
+  const [modelUrl, setModelURL] = useState('');
+  const [modelXLocation, setXLocation] = useState('');
+  const [modelYLocation, setYLocation] = useState('');
+  const [modelFloor, setFloor] = useState('');
+
   useEffect(() => {
-    const arModelList = getAllArModels(1).then((res) => {
+      const arModelList = getAllArModels(1).then((res) => {
       console.log(res);
       if(Array.isArray(res)){
         setArModelList(res);
@@ -96,6 +102,8 @@ export default function ArModel() {
 
     console.log(arModelList);
   }, []);
+
+
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -194,7 +202,7 @@ export default function ArModel() {
                   {filteredModels
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { id, name, description, x_location, y_location, model, floor } = row;
+                      const { id, name, description, image } = row;
                       const isItemSelected = selected.indexOf(name) !== -1;
 
                       return (
@@ -212,22 +220,16 @@ export default function ArModel() {
                               onChange={(event) => handleClick(event, name)}
                             />
                           </TableCell>
-                          {/* <TableCell component="th" scope="row" padding="none">
+                          <TableCell component="th" scope="row" padding="none">
                             <Stack direction="row" alignItems="center" spacing={2}>
                               <Avatar alt={name} src={image} />
                               <Typography variant="subtitle2" noWrap>
                                 {name}
                               </Typography>
                             </Stack>
-                          </TableCell> */}
-                          <TableCell align="left">{name}</TableCell>
-                          <TableCell align="left">{description}</TableCell>
-                          <TableCell align="left">
-                            <a href={model}>Link</a>
                           </TableCell>
-                          <TableCell align="left">{x_location}</TableCell>
-                          <TableCell align="left">{y_location}</TableCell>
-                          <TableCell align="left">{floor}</TableCell>
+                          <TableCell align="left">{description}</TableCell>
+                          <TableCell align="left">Test Location</TableCell>
                           <TableCell align="right">
                             <UserMoreMenu />
                           </TableCell>
@@ -284,14 +286,64 @@ export default function ArModel() {
               <Icon icon={closeFill} width={20} height={20} />
             </IconButton>
           </Stack>
-          <TextField fullWidth label="AR Model" style={{ marginBottom: '15px' }} />
-          <TextField fullWidth label="Description" style={{ marginBottom: '15px' }} />
+          <TextField 
+              fullWidth 
+              label="Model Name" 
+              onChange={(e) => {
+                setModelName(e.target.value);
+              }}
+              style={{ marginBottom: '15px' }} />
+          <TextField 
+              fullWidth 
+              label="Model Description"
+              onChange={(e) => {
+                setModelDescription(e.target.value);
+              }} 
+              style={{ marginBottom: '15px' }} />
+          <TextField 
+              fullWidth 
+              label="Model URL" 
+              onChange={(e) => {
+                setModelURL(e.target.value);
+              }}
+              style={{ marginBottom: '15px' }} />
+          <TextField 
+              fullWidth 
+              label="Model X-Location" 
+              onChange={(e) => {
+                setXLocation(e.target.value);
+              }}
+              style={{ marginBottom: '15px' }} />
+          <TextField 
+              fullWidth 
+              label="Model Y-Location" 
+              onChange={(e) => {
+                setYLocation(e.target.value);
+              }}
+              style={{ marginBottom: '15px' }} />
+          <TextField 
+              fullWidth 
+              label="Model Floor" 
+              onChange={(e) => {
+                setFloor(e.target.value);
+              }}
+              style={{ marginBottom: '15px' }} />
           <Button variant="contained" component="label" style={{ marginBottom: '40px' }}>
             Upload File
             <input type="file" hidden />
           </Button>
 
-          <Button variant="contained" component={RouterLink} to="#" onClick={toggleDrawer}>
+          <Button 
+              variant="contained" 
+              component={RouterLink} 
+              to="#" 
+              onClick={() => {
+                createArModel(modelName, modelDescription, modelUrl, modelXLocation, modelYLocation, modelFloor)
+                  .then((res) => {
+                    console.log(res);
+                  })
+                  .catch((e) => console.log(e));
+              }}>
             Save
           </Button>
         </Drawer>
