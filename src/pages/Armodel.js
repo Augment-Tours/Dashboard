@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { filter } from 'lodash';
 import { Icon } from '@iconify/react';
 // import { sentenceCase } from 'change-case';
@@ -10,7 +11,6 @@ import {
   Card,
   Table,
   Stack,
-  Avatar,
   Button,
   Checkbox,
   IconButton,
@@ -91,19 +91,23 @@ export default function ArModel() {
   const [modelXLocation, setXLocation] = useState('');
   const [modelYLocation, setYLocation] = useState('');
   const [modelFloor, setFloor] = useState('');
+  const [xScale, setXScale] = useState(0);
+  const [yScale, setYScale] = useState(0);
+  const [zScale, setZScale] = useState(0);
+  const [museumId, setMuseumId] = useState('');
 
   useEffect(() => {
-      const arModelList = getAllArModels(1).then((res) => {
-      console.log(res);
-      if(Array.isArray(res)){
-        setArModelList(res);
-      }
-    }).catch(err=>console.log(err));
+    const arModelList = getAllArModels(1)
+      .then((res) => {
+        console.log(res);
+        if (Array.isArray(res)) {
+          setArModelList(res);
+        }
+      })
+      .catch((err) => console.log(err));
 
     console.log(arModelList);
   }, []);
-
-
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -202,7 +206,7 @@ export default function ArModel() {
                   {filteredModels
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { id, name, description, image } = row;
+                      const { id, name, description, x_location, y_location, floor, model } = row;
                       const isItemSelected = selected.indexOf(name) !== -1;
 
                       return (
@@ -220,16 +224,14 @@ export default function ArModel() {
                               onChange={(event) => handleClick(event, name)}
                             />
                           </TableCell>
-                          <TableCell component="th" scope="row" padding="none">
-                            <Stack direction="row" alignItems="center" spacing={2}>
-                              <Avatar alt={name} src={image} />
-                              <Typography variant="subtitle2" noWrap>
-                                {name}
-                              </Typography>
-                            </Stack>
-                          </TableCell>
+                          <TableCell align="left">{name}</TableCell>
                           <TableCell align="left">{description}</TableCell>
-                          <TableCell align="left">Test Location</TableCell>
+                          <TableCell align="left">
+                            <a href={model}>Link</a>
+                          </TableCell>
+                          <TableCell align="left">{x_location}</TableCell>
+                          <TableCell align="left">{y_location}</TableCell>
+                          <TableCell align="left">{floor}</TableCell>
                           <TableCell align="right">
                             <UserMoreMenu />
                           </TableCell>
@@ -286,64 +288,116 @@ export default function ArModel() {
               <Icon icon={closeFill} width={20} height={20} />
             </IconButton>
           </Stack>
-          <TextField 
-              fullWidth 
-              label="Model Name" 
-              onChange={(e) => {
-                setModelName(e.target.value);
-              }}
-              style={{ marginBottom: '15px' }} />
-          <TextField 
-              fullWidth 
-              label="Model Description"
-              onChange={(e) => {
-                setModelDescription(e.target.value);
-              }} 
-              style={{ marginBottom: '15px' }} />
-          <TextField 
-              fullWidth 
-              label="Model URL" 
-              onChange={(e) => {
-                setModelURL(e.target.value);
-              }}
-              style={{ marginBottom: '15px' }} />
-          <TextField 
-              fullWidth 
-              label="Model X-Location" 
-              onChange={(e) => {
-                setXLocation(e.target.value);
-              }}
-              style={{ marginBottom: '15px' }} />
-          <TextField 
-              fullWidth 
-              label="Model Y-Location" 
-              onChange={(e) => {
-                setYLocation(e.target.value);
-              }}
-              style={{ marginBottom: '15px' }} />
-          <TextField 
-              fullWidth 
-              label="Model Floor" 
-              onChange={(e) => {
-                setFloor(e.target.value);
-              }}
-              style={{ marginBottom: '15px' }} />
-          <Button variant="contained" component="label" style={{ marginBottom: '40px' }}>
+          <TextField
+            fullWidth
+            label="Model Name"
+            onChange={(e) => {
+              setModelName(e.target.value);
+            }}
+            style={{ marginBottom: '15px' }}
+          />
+          <TextField
+            fullWidth
+            label="Model Description"
+            onChange={(e) => {
+              setModelDescription(e.target.value);
+            }}
+            style={{ marginBottom: '15px' }}
+          />
+          <TextField
+            fullWidth
+            label="Model URL"
+            onChange={(e) => {
+              setModelURL(e.target.value);
+            }}
+            style={{ marginBottom: '15px' }}
+          />
+
+          <TextField
+            fullWidth
+            label="Museum Id"
+            onChange={(e) => {
+              setMuseumId(e.target.value);
+            }}
+            style={{ marginBottom: '15px' }}
+          />
+          <TextField
+            fullWidth
+            label="Model X-Location"
+            onChange={(e) => {
+              setXLocation(e.target.value);
+            }}
+            style={{ marginBottom: '15px' }}
+          />
+          <TextField
+            fullWidth
+            label="Model Y-Location"
+            onChange={(e) => {
+              setYLocation(e.target.value);
+            }}
+            style={{ marginBottom: '15px' }}
+          />
+          <TextField
+            fullWidth
+            label="Model X-Scale"
+            onChange={(e) => {
+              setXScale(e.target.value);
+            }}
+            style={{ marginBottom: '15px' }}
+          />
+          <TextField
+            fullWidth
+            label="Model Y-Scale"
+            onChange={(e) => {
+              setYScale(e.target.value);
+            }}
+            style={{ marginBottom: '15px' }}
+          />
+          <TextField
+            fullWidth
+            label="Model Z-Scale"
+            onChange={(e) => {
+              setZScale(e.target.value);
+            }}
+            style={{ marginBottom: '15px' }}
+          />
+          <TextField
+            fullWidth
+            label="Model Floor"
+            onChange={(e) => {
+              setFloor(e.target.value);
+            }}
+            style={{ marginBottom: '15px' }}
+          />
+          {/* <Button variant="contained" component="label" style={{ marginBottom: '40px' }}>
             Upload File
             <input type="file" hidden />
-          </Button>
+          </Button> */}
 
-          <Button 
-              variant="contained" 
-              component={RouterLink} 
-              to="#" 
-              onClick={() => {
-                createArModel(modelName, modelDescription, modelUrl, modelXLocation, modelYLocation, modelFloor)
-                  .then((res) => {
-                    console.log(res);
-                  })
-                  .catch((e) => console.log(e));
-              }}>
+          <Button
+            variant="contained"
+            component={RouterLink}
+            to="#"
+            onClick={() => {
+              createArModel(
+                modelName,
+                modelDescription,
+                modelUrl,
+                modelXLocation,
+                modelYLocation,
+                xScale,
+                yScale,
+                zScale,
+                modelFloor,
+                museumId
+              )
+                .then((res) => {
+                  console.log(res);
+                  setIsOpenFilter(false);
+                })
+                .catch((e) => console.log(e));
+            }}
+          >
             Save
           </Button>
         </Drawer>
