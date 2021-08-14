@@ -5,6 +5,8 @@ import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 // material
 import {
   Link,
@@ -17,11 +19,14 @@ import {
 } from '@material-ui/core';
 import { LoadingButton } from '@material-ui/lab';
 
+import { isUserAdmin } from '../../../pages/request/account';
+
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
@@ -36,7 +41,20 @@ export default function LoginForm() {
     },
     validationSchema: LoginSchema,
     onSubmit: () => {
-      navigate('/dashboard', { replace: true });
+      // navigate('/dashboard', { replace: true });
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(formik.values.email, formik.values.password)
+        .then((res) => {
+          isUserAdmin(res.user.email).then((isAdmin) => {
+            if (isAdmin) {
+              navigate('/dashboard', { replace: true });
+            } else {
+              setErrorMessage('* Invalid credentials');
+              formik.setSubmitting(false);
+            }
+          });
+        });
     }
   });
 
@@ -79,7 +97,7 @@ export default function LoginForm() {
             helperText={touched.password && errors.password}
           />
         </Stack>
-
+        <p style={{ color: 'red' }}>{errorMessage}</p>
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
           <FormControlLabel
             control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />}

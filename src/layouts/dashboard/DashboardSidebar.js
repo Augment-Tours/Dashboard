@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 // material
 import { experimentalStyled as styled } from '@material-ui/core/styles';
 import { Box, Link, Drawer, Typography, Avatar } from '@material-ui/core';
+
+import { FirebaseAuthConsumer } from '@react-firebase/auth';
 // components
 import Logo from '../../components/Logo';
 import Scrollbar from '../../components/Scrollbar';
@@ -12,6 +14,7 @@ import { MHidden } from '../../components/@material-extend';
 //
 import sidebarConfig from './SidebarConfig';
 import account from '../../_mocks_/account';
+import { getAccountByEmail } from '../../pages/request/account';
 
 // ----------------------------------------------------------------------
 
@@ -41,6 +44,7 @@ DashboardSidebar.propTypes = {
 
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const { pathname } = useLocation();
+  const [name, setName] = useState('');
 
   useEffect(() => {
     if (isOpenSidebar) {
@@ -61,22 +65,30 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           <Logo />
         </Box>
       </Box>
-
-      <Box sx={{ mb: 5, mx: 2.5 }}>
-        <Link underline="none" component={RouterLink} to="#">
-          <AccountStyle>
-            <Avatar src={account.photoURL} alt="photoURL" />
-            <Box sx={{ ml: 2 }}>
-              <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {account.displayName}
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {account.role}
-              </Typography>
+      <FirebaseAuthConsumer>
+        {({ user }) => {
+          getAccountByEmail(user.email).then((res) => {
+            setName(res.name);
+          });
+          return (
+            <Box sx={{ mb: 5, mx: 2.5 }}>
+              <Link underline="none" component={RouterLink} to="#">
+                <AccountStyle>
+                  <Avatar src={account.photoURL} alt="photoURL" />
+                  <Box sx={{ ml: 2 }}>
+                    <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
+                      {name}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                      Admin
+                    </Typography>
+                  </Box>
+                </AccountStyle>
+              </Link>
             </Box>
-          </AccountStyle>
-        </Link>
-      </Box>
+          );
+        }}
+      </FirebaseAuthConsumer>
 
       <NavSection navConfig={sidebarConfig} />
 
