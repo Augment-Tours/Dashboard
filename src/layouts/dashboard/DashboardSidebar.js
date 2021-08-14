@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { Link as RouterLink, Navigate, useLocation } from 'react-router-dom';
 // material
 import { experimentalStyled as styled } from '@material-ui/core/styles';
 import { Box, Link, Drawer, Typography, Avatar } from '@material-ui/core';
@@ -66,7 +66,10 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         </Box>
       </Box>
       <FirebaseAuthConsumer>
-        {({ user }) => {
+        {({ isSignedIn, user }) => {
+          if (!isSignedIn) {
+            return <Navigate to="/login" />;
+          }
           getAccountByEmail(user.email).then((res) => {
             setName(res.name);
           });
