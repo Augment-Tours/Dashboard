@@ -3,26 +3,21 @@ import { Icon } from '@iconify/react';
 // import { sentenceCase } from 'change-case';
 import { useState, useEffect } from 'react';
 import plusFill from '@iconify/icons-eva/plus-fill';
-import closeFill from '@iconify/icons-eva/close-fill';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import {
   Card,
   Table,
   Stack,
-  Avatar,
   Button,
   Checkbox,
-  IconButton,
   TableRow,
   TableBody,
   TableCell,
-  TextField,
   Container,
   Typography,
   TableContainer,
-  TablePagination,
-  Drawer
+  TablePagination
 } from '@material-ui/core';
 // components
 import Page from '../components/Page';
@@ -32,13 +27,14 @@ import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dashboard/user';
 //
 // import USERLIST from '../_mocks_/user';
-import { getAllTargets, createTargetImage } from './request/target';
+import { getAllTargets } from './request/target';
+import CreateTargetDrawer from '../components/target/CreateTarget';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Target Image Info', alignRight: false },
-  { id: 'description', label: 'Description', alignRight: false },
-  { id: 'floor', label: 'Floor', alignRight: false }
+  { id: 'floor', label: 'Floor', alignRight: false },
+  { id: 'link', label: 'Link', alignRight: false }
 ];
 
 // ----------------------------------------------------------------------
@@ -82,13 +78,6 @@ export default function Museum() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [isOpenFilter, setIsOpenFilter] = useState(false);
   const [targetsList, setTargetList] = useState([]);
-
-  const [information, setInformation] = useState('');
-  const [targetImageUrl, setTargetImageUrl] = useState('');
-  const [x_location, setX_location] = useState(0);
-  const [y_location, setY_location] = useState(0);
-  const [floor, setFloor] = useState(0);
-  const [museums_id, setMuseums_id] = useState('');
 
   useEffect(() => {
     const targetsList = getAllTargets(1).then((res) => {
@@ -155,7 +144,7 @@ export default function Museum() {
   };
 
   return (
-    <Page title="Museums | Augment-Tours">
+    <Page title="Target Images | Augment-Tours">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
@@ -213,16 +202,11 @@ export default function Museum() {
                               onChange={(event) => handleClick(event, name)}
                             />
                           </TableCell>
-                          <TableCell component="th" scope="row" padding="none">
-                            <Stack direction="row" alignItems="center" spacing={2}>
-                              <Avatar alt={information} src={model} />
-                              <Typography variant="subtitle2" noWrap>
-                                {information}
-                              </Typography>
-                            </Stack>
-                          </TableCell>
                           <TableCell align="left">{information}</TableCell>
                           <TableCell align="left">{floor}</TableCell>
+                          <TableCell align="left">
+                            <a href={model}>Link</a>
+                          </TableCell>
                           <TableCell align="right">
                             <UserMoreMenu />
                           </TableCell>
@@ -258,107 +242,11 @@ export default function Museum() {
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </Card>
-        <Drawer
-          anchor="right"
-          open={isOpenFilter}
-          onClose={() => {}}
-          PaperProps={{
-            sx: { width: 400, border: 'none', overflow: 'hidden', padding: '20px 20px' }
-          }}
-        >
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-            sx={{ px: 1, py: 2 }}
-          >
-            <Typography variant="subtitle1" sx={{ ml: 1 }}>
-              Add Target Image
-            </Typography>
-            <IconButton onClick={toggleDrawer}>
-              <Icon icon={closeFill} width={20} height={20} />
-            </IconButton>
-          </Stack>
-          <TextField
-            fullWidth
-            label="Museum Id"
-            onChange={(e) => {
-              setMuseums_id(e.target.value);
-            }}
-            value={museums_id}
-            style={{ marginBottom: '15px' }}
-          />
-          <TextField
-            fullWidth
-            label="Information"
-            onChange={(e) => {
-              setInformation(e.target.value);
-            }}
-            value={museums_id}
-            style={{ marginBottom: '15px' }}
-          />
-          <TextField
-            fullWidth
-            label="Target Image URL"
-            onChange={(e) => {
-              setTargetImageUrl(e.target.value);
-            }}
-            value={museums_id}
-            style={{ marginBottom: '15px' }}
-          />
-          <TextField
-            fullWidth
-            type="number"
-            label="X Location"
-            onChange={(e) => {
-              setX_location(e.target.value);
-            }}
-            value={museums_id}
-            style={{ marginBottom: '15px' }}
-          />
-          <TextField
-            fullWidth
-            type="number"
-            label="Y Location"
-            onChange={(e) => {
-              setY_location(e.target.value);
-            }}
-            value={museums_id}
-            style={{ marginBottom: '15px' }}
-          />
-          <TextField
-            fullWidth
-            label="Floor"
-            type="number"
-            onChange={(e) => {
-              setFloor(e.target.value);
-            }}
-            value={museums_id}
-            style={{ marginBottom: '15px' }}
-          />
-
-          <Button
-            variant="contained"
-            component={RouterLink}
-            to="#"
-            onClick={() => {
-              const targetImage = createTargetImage(
-                information,
-                targetImageUrl,
-                x_location,
-                y_location,
-                floor,
-                museums_id
-              )
-                .then((res) => {
-                  console.log(res);
-                })
-                .catch((e) => console.log(e));
-            }}
-          >
-            Add
-          </Button>
-        </Drawer>
+        <CreateTargetDrawer
+          isDrawerOpen={isOpenFilter}
+          toggleDrawer={toggleDrawer}
+          setIsDrawerOpen={setIsOpenFilter}
+        />
       </Container>
     </Page>
   );

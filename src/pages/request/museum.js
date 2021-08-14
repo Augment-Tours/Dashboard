@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const getAllMuseums = async (pageNo) => {
+const getAllMuseums = async () => {
   const url = 'http://localhost:3000/museums/';
   return axios
     .get(url)

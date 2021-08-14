@@ -3,15 +3,17 @@ import { useRef, useState } from 'react';
 import homeFill from '@iconify/icons-eva/home-fill';
 import personFill from '@iconify/icons-eva/person-fill';
 import settings2Fill from '@iconify/icons-eva/settings-2-fill';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import firebase from 'firebase/app';
+import { FirebaseAuthConsumer } from '@react-firebase/auth';
 // material
 import { alpha } from '@material-ui/core/styles';
 import { Button, Box, Divider, MenuItem, Typography, Avatar, IconButton } from '@material-ui/core';
 // components
 import MenuPopover from '../../components/MenuPopover';
+import { getAccountByEmail } from '../../pages/request/account';
 //
 import account from '../../_mocks_/account';
-
 // ----------------------------------------------------------------------
 
 const MENU_OPTIONS = [
@@ -37,6 +39,8 @@ const MENU_OPTIONS = [
 export default function AccountPopover() {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
+  const [name, setName] = useState('');
+  const navigate = useNavigate();
 
   const handleOpen = () => {
     setOpen(true);
@@ -76,14 +80,23 @@ export default function AccountPopover() {
         anchorEl={anchorRef.current}
         sx={{ width: 220 }}
       >
-        <Box sx={{ my: 1.5, px: 2.5 }}>
-          <Typography variant="subtitle1" noWrap>
-            {account.displayName}
-          </Typography>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
-          </Typography>
-        </Box>
+        <FirebaseAuthConsumer>
+          {({ user }) => {
+            getAccountByEmail(user.email).then((res) => {
+              setName(res.name);
+            });
+            return (
+              <Box sx={{ my: 1.5, px: 2.5 }}>
+                <Typography variant="subtitle1" noWrap>
+                  {name}
+                </Typography>
+                <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+                  {user.email}
+                </Typography>
+              </Box>
+            );
+          }}
+        </FirebaseAuthConsumer>
 
         <Divider sx={{ my: 1 }} />
 
@@ -110,7 +123,15 @@ export default function AccountPopover() {
         ))}
 
         <Box sx={{ p: 2, pt: 1.5 }}>
-          <Button fullWidth color="inherit" variant="outlined">
+          <Button
+            fullWidth
+            color="inherit"
+            variant="outlined"
+            onClick={() => {
+              firebase.auth().signOut();
+              navigate('/login');
+            }}
+          >
             Logout
           </Button>
         </Box>
