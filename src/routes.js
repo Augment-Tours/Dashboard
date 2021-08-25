@@ -31,7 +31,8 @@ export default function Router() {
         { path: 'blog', element: <PrivateRoute component={Blog} /> },
         { path: 'museums', element: <PrivateRoute component={Museum} /> },
         { path: 'ar-models', element: <PrivateRoute component={ARModel} /> },
-        { path: 'target-images', element: <PrivateRoute component={TargetImage} /> }
+        { path: 'target-images', element: <PrivateRoute component={TargetImage} /> },
+        { path: 'users', element: <PrivateRoute component={User}/>}
       ]
     },
     {

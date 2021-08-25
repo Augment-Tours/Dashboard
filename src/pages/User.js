@@ -2,6 +2,7 @@ import { filter } from 'lodash';
 import { Icon } from '@iconify/react';
 import { sentenceCase } from 'change-case';
 import { useState } from 'react';
+import closeFill from '@iconify/icons-eva/close-fill';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Link as RouterLink } from 'react-router-dom';
 // material
@@ -18,7 +19,10 @@ import {
   Container,
   Typography,
   TableContainer,
-  TablePagination
+  TablePagination,
+  Drawer,
+  TextField,
+  IconButton
 } from '@material-ui/core';
 // components
 import Page from '../components/Page';
@@ -28,6 +32,8 @@ import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dashboard/user';
 //
 import USERLIST from '../_mocks_/user';
+
+import { createUser } from './request/user'
 
 // ----------------------------------------------------------------------
 
@@ -78,6 +84,13 @@ export default function User() {
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [isOpenFilter, setIsOpenFilter] = useState(false);
+
+  const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
+  const [userPassword, setUserPassword] = useState('');
+  const [userIsAdmin, setUserIsAdmin] = useState(false);
+
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -130,6 +143,10 @@ export default function User() {
   const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
 
   const isUserNotFound = filteredUsers.length === 0;
+
+  const toggleDrawer = () => {
+    setIsOpenFilter(!isOpenFilter);
+  };
 
   return (
     <Page title="User | Augment">
@@ -244,6 +261,89 @@ export default function User() {
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </Card>
+
+        <Drawer
+          anchor="right"
+          open={isOpenFilter}
+          onClose={() => {}}
+          PaperProps={{
+            sx: { width: 400, border: 'none', overflow: 'hidden', padding: '20px 20px' }
+          }}
+        >
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            sx={{ px: 1, py: 2 }}
+          >
+            <Typography variant="subtitle1" sx={{ ml: 1 }}>
+              Add User
+            </Typography>
+            <IconButton onClick={toggleDrawer}>
+              <Icon icon={closeFill} width={20} height={20} />
+            </IconButton>
+          </Stack>
+          <TextField
+            fullWidth
+            label="User Name"
+            onChange={(e) => {
+              setUserName(e.target.value);
+            }}
+            style={{ marginBottom: '15px' }}
+          />
+          <TextField
+            fullWidth
+            label="User Email"
+            onChange={(e) => {
+              setUserEmail(e.target.value);
+            }}
+            style={{ marginBottom: '15px' }}
+          />
+          <TextField
+            fullWidth
+            label="User Password"
+            onChange={(e) => {
+              setUserPassword(e.target.value);
+            }}
+            style={{ marginBottom: '15px' }}
+          />
+
+          <TextField
+            fullWidth
+            label="Is Admin"
+            onChange={(e) => {
+              setUserIsAdmin(e.target.value);
+            }}
+            style={{ marginBottom: '15px' }}
+          />
+          
+          {/* <Button variant="contained" component="label" style={{ marginBottom: '40px' }}>
+            Upload File
+            <input type="file" hidden />
+          </Button> */}
+
+          <Button
+            variant="contained"
+            component={RouterLink}
+            to="#"
+            onClick={() => {
+              createUser(
+                userName,
+                userEmail,
+                userPassword,
+                userIsAdmin
+              )
+                .then((res) => {
+                  console.log(res);
+                  setIsOpenFilter(false);
+                })
+                .catch((e) => console.log(e));
+            }}
+          >
+            Save
+          </Button>
+        </Drawer>
+
       </Container>
     </Page>
   );
