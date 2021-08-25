@@ -54,6 +54,10 @@ export default function LoginForm() {
               formik.setSubmitting(false);
             }
           });
+        })
+        .catch((err) => {
+          setErrorMessage('* Invalid credentials');
+          formik.setSubmitting(false);
         });
     }
   });
@@ -69,6 +73,7 @@ export default function LoginForm() {
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
           <TextField
+            augment-input="username"
             fullWidth
             autoComplete="username"
             type="email"
@@ -79,6 +84,7 @@ export default function LoginForm() {
           />
 
           <TextField
+            augment-input="password"
             fullWidth
             autoComplete="current-password"
             type={showPassword ? 'text' : 'password'}
@@ -97,7 +103,9 @@ export default function LoginForm() {
             helperText={touched.password && errors.password}
           />
         </Stack>
-        <p style={{ color: 'red' }}>{errorMessage}</p>
+        <p style={{ color: 'red' }} augment-text="error">
+          {errorMessage}
+        </p>
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
           <FormControlLabel
             control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />}
@@ -115,6 +123,7 @@ export default function LoginForm() {
           type="submit"
           variant="contained"
           loading={isSubmitting}
+          augment-input="login-button"
         >
           Login
         </LoadingButton>
