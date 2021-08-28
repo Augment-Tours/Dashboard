@@ -158,7 +158,9 @@ export default function User() {
             variant="contained"
             component={RouterLink}
             to="#"
-            onClick={()=>{setIsOpenFilter(true)}}
+            onClick={() => {
+              setIsOpenFilter(true);
+            }}
             startIcon={<Icon icon={plusFill} />}
           >
             New User

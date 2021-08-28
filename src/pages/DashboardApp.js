@@ -13,7 +13,8 @@ import {
 
 export default function DashboardApp() {
   return (
-    <Page title="Dashboard | Augment">x
+    <Page title="Dashboard | Augment">
+      x
       <Container maxWidth="xl">
         <Box sx={{ pb: 5 }}>
           <Typography variant="h4" augment-text="welcome">
