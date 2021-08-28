@@ -3,7 +3,7 @@
   "env": {
     "browser": true,
     "node": true,
-    "cypress/globals": true
+    // "cypress/globals": true
   },
   "extends": [
     "airbnb",

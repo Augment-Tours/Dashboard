@@ -1,7 +1,8 @@
 import { filter } from 'lodash';
 import { Icon } from '@iconify/react';
-import { sentenceCase } from 'change-case';
-import { useState } from 'react';
+// import { sentenceCase } from 'change-case';
+import { useState, useEffect } from 'react';
+// import closeFill from '@iconify/icons-eva/close-fill';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Link as RouterLink } from 'react-router-dom';
 // material
@@ -9,7 +10,6 @@ import {
   Card,
   Table,
   Stack,
-  Avatar,
   Button,
   Checkbox,
   TableRow,
@@ -22,21 +22,24 @@ import {
 } from '@material-ui/core';
 // components
 import Page from '../components/Page';
-import Label from '../components/Label';
+// import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dashboard/user';
 //
 import USERLIST from '../_mocks_/user';
 
+import { getAllUsers } from './request/user';
+import CreateDrawer from '../components/user/CreateDrawer';
+
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', alignRight: false },
-  { id: 'company', label: 'Company', alignRight: false },
-  { id: 'role', label: 'Role', alignRight: false },
-  { id: 'isVerified', label: 'Verified', alignRight: false },
-  { id: 'status', label: 'Status', alignRight: false },
+  { id: 'email', label: 'Email', alignRight: false },
+  { id: 'isAdmin', label: 'Is Admin', alignRight: false },
+  // { id: 'isVerified', label: 'Verified', alignRight: false },
+  // { id: 'status', label: 'Status', alignRight: false },
   { id: '' }
 ];
 
@@ -78,6 +81,15 @@ export default function User() {
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [isOpenFilter, setIsOpenFilter] = useState(false);
+  const [userList, setUserList] = useState([]);
+
+  useEffect(() => {
+    getAllUsers().then((res) => {
+      setUserList(res);
+      // console.log(res)
+    });
+  }, []);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -127,9 +139,13 @@ export default function User() {
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
 
-  const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
+  const filteredUsers = applySortFilter(userList, getComparator(order, orderBy), filterName);
 
   const isUserNotFound = filteredUsers.length === 0;
+
+  const toggleDrawer = () => {
+    setIsOpenFilter(!isOpenFilter);
+  };
 
   return (
     <Page title="User | Augment">
@@ -142,6 +158,7 @@ export default function User() {
             variant="contained"
             component={RouterLink}
             to="#"
+            onClick={()=>{setIsOpenFilter(true)}}
             startIcon={<Icon icon={plusFill} />}
           >
             New User
@@ -171,7 +188,7 @@ export default function User() {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { id, name, role, status, company, avatarUrl, isVerified } = row;
+                      const { id, email, isAdmin, name } = row;
                       const isItemSelected = selected.indexOf(name) !== -1;
 
                       return (
@@ -191,24 +208,14 @@ export default function User() {
                           </TableCell>
                           <TableCell component="th" scope="row" padding="none">
                             <Stack direction="row" alignItems="center" spacing={2}>
-                              <Avatar alt={name} src={avatarUrl} />
+                              {/* <Avatar alt={name} src={avatarUrl} /> */}
                               <Typography variant="subtitle2" noWrap>
                                 {name}
                               </Typography>
                             </Stack>
                           </TableCell>
-                          <TableCell align="left">{company}</TableCell>
-                          <TableCell align="left">{role}</TableCell>
-                          <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
-                          <TableCell align="left">
-                            <Label
-                              variant="ghost"
-                              color={(status === 'banned' && 'error') || 'success'}
-                            >
-                              {sentenceCase(status)}
-                            </Label>
-                          </TableCell>
-
+                          <TableCell align="left">{email}</TableCell>
+                          <TableCell align="left">{isAdmin ? 'Yes' : 'No'}</TableCell>
                           <TableCell align="right">
                             <UserMoreMenu />
                           </TableCell>
@@ -244,6 +251,12 @@ export default function User() {
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </Card>
+
+        <CreateDrawer
+          isOpenFilter={isOpenFilter}
+          setIsOpenFilter={setIsOpenFilter}
+          toggleDrawer={toggleDrawer}
+        />
       </Container>
     </Page>
   );
