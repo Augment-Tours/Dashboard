@@ -36,7 +36,7 @@ const TABLE_HEAD = [
   { id: 'floor', label: 'Floor', alignRight: false },
   { id: 'link', label: 'Link', alignRight: false },
   { id: 'museum', label: 'Museum Name', alignRight: false },
-  { id: 'type', label: 'Target Type', alignRight: false },
+  { id: 'type', label: 'Target Type', alignRight: false }
 ];
 
 // ----------------------------------------------------------------------
