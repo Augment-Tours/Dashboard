@@ -8,7 +8,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { createArModel } from '../../pages/request/armodel';
 
-const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer }) => {
+const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchARModels }) => {
   const { errors, handleSubmit, handleChange } = useFormik({
     initialValues: {
       modelName: '',
@@ -24,8 +24,8 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer }) => {
     },
     onSubmit: (values) => {
       createArModel(
-        values.modelDescription,
         values.modelName,
+        values.modelDescription,
         values.modelUrl,
         values.modelXLocation,
         values.modelYLocation,
@@ -38,6 +38,7 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer }) => {
         .then((res) => {
           console.log(res);
           setIsOpenFilter(false);
+          refetchARModels();
         })
         .catch((e) => console.log(e));
       // console.log(values);
@@ -53,7 +54,7 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer }) => {
         xScale: Yup.number().required(),
         yScale: Yup.number().required(),
         zScale: Yup.number().required(),
-        museumId: Yup.number().required()
+        museumId: Yup.string().required()
       })
   });
 

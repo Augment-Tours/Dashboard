@@ -79,12 +79,16 @@ export default function Museum() {
   const [isOpenFilter, setIsOpenFilter] = useState(false);
   const [museumList, setMuseumList] = useState([]);
 
-  useEffect(() => {
-    const museumList = getAllMuseums(1).then((res) => {
+  const fetchMuseumLists = () => {
+    getAllMuseums(1).then((res) => {
       console.log(res);
       setMuseumList(res);
     });
-    console.log(museumList);
+  };
+
+  useEffect(() => {
+    fetchMuseumLists();
+    // console.log(museumList);
   }, []);
 
   const handleRequestSort = (event, property) => {
@@ -251,6 +255,7 @@ export default function Museum() {
           isOpenFilter={isOpenFilter}
           setIsOpenFilter={setIsOpenFilter}
           toggleDrawer={toggleDrawer}
+          refetchMuseums={fetchMuseumLists}
         />
       </Container>
     </Page>

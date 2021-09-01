@@ -34,7 +34,8 @@ import CreateTargetDrawer from '../components/target/CreateTarget';
 const TABLE_HEAD = [
   { id: 'name', label: 'Target Image Info', alignRight: false },
   { id: 'floor', label: 'Floor', alignRight: false },
-  { id: 'link', label: 'Link', alignRight: false }
+  { id: 'link', label: 'Link', alignRight: false },
+  { id: 'museum', label: 'Museum Name', alignRight: false }
 ];
 
 // ----------------------------------------------------------------------
@@ -79,12 +80,15 @@ export default function Museum() {
   const [isOpenFilter, setIsOpenFilter] = useState(false);
   const [targetsList, setTargetList] = useState([]);
 
-  useEffect(() => {
-    const targetsList = getAllTargets(1).then((res) => {
-      console.log(res);
+  const fetchTargetImages = () => {
+    getAllTargets(1).then((res) => {
       setTargetList(res);
     });
-    console.log(targetsList);
+  };
+
+  useEffect(() => {
+    fetchTargetImages();
+    // console.log(targetsList);
   }, []);
 
   const handleRequestSort = (event, property) => {
@@ -207,6 +211,7 @@ export default function Museum() {
                           <TableCell align="left">
                             <a href={model}>Link</a>
                           </TableCell>
+                          <TableCell align="left">5 Killo</TableCell>
                           <TableCell align="right">
                             <UserMoreMenu />
                           </TableCell>
@@ -246,6 +251,7 @@ export default function Museum() {
           isDrawerOpen={isOpenFilter}
           toggleDrawer={toggleDrawer}
           setIsDrawerOpen={setIsOpenFilter}
+          refetchTargetImages={fetchTargetImages}
         />
       </Container>
     </Page>

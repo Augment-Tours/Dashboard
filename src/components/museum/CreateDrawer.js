@@ -10,7 +10,7 @@ import * as Yup from 'yup';
 // import { createArModel } from '../../pages/request/armodel';
 import { createMuseum } from '../../pages/request/museum';
 
-const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer }) => {
+const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchMuseums }) => {
   const { errors, handleSubmit, handleChange } = useFormik({
     initialValues: {
       museumName: '',
@@ -22,6 +22,7 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer }) => {
         .then((res) => {
           console.log(res);
           setIsOpenFilter(false);
+          refetchMuseums();
         })
         .catch((e) => console.log(e));
       // console.log(values);

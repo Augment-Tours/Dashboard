@@ -38,7 +38,9 @@ const TABLE_HEAD = [
   { id: 'model', label: 'Model', alignRight: false },
   { id: 'x_location', label: 'X-Location', alignRight: false },
   { id: 'y_location', label: 'Y-Location', alignRight: false },
-  { id: 'floor', label: 'Floor', alignRight: false }
+  { id: 'floor', label: 'Floor', alignRight: false },
+  { id: 'museum', label: 'Museum Name', alignRight: false },
+  { id: 'target', label: 'Target Name', alignRight: false }
 ];
 
 // ----------------------------------------------------------------------
@@ -82,8 +84,8 @@ export default function ArModel() {
   const [isOpenFilter, setIsOpenFilter] = useState(false);
   const [arModelList, setArModelList] = useState([]);
 
-  useEffect(() => {
-    const arModelList = getAllArModels(1)
+  const fetchARModels = () => {
+    getAllArModels(1)
       .then((res) => {
         console.log(res);
         if (Array.isArray(res)) {
@@ -91,8 +93,10 @@ export default function ArModel() {
         }
       })
       .catch((err) => console.log(err));
+  };
 
-    console.log(arModelList);
+  useEffect(() => {
+    fetchARModels();
   }, []);
 
   const handleRequestSort = (event, property) => {
@@ -257,6 +261,7 @@ export default function ArModel() {
           isOpenFilter={isOpenFilter}
           setIsOpenFilter={setIsOpenFilter}
           toggleDrawer={toggleDrawer}
+          refetchARModels={fetchARModels}
         />
       </Container>
     </Page>

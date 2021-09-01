@@ -8,7 +8,7 @@ import Icon from '@iconify/react';
 
 import { createTargetImage } from '../../pages/request/target';
 
-const CreateTarget = ({ toggleDrawer, isDrawerOpen, setIsDrawerOpen }) => {
+const CreateTarget = ({ toggleDrawer, isDrawerOpen, setIsDrawerOpen, refetchTargetImages }) => {
   const [information, setInformation] = useState('');
   const [targetImageUrl, setTargetImageUrl] = useState('');
   const [x_location, setX_location] = useState(0);
@@ -104,6 +104,7 @@ const CreateTarget = ({ toggleDrawer, isDrawerOpen, setIsDrawerOpen }) => {
             .then((res) => {
               console.log(res);
               setIsDrawerOpen(false);
+              refetchTargetImages();
             })
             .catch((e) => console.log(e));
         }}
