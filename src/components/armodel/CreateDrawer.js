@@ -16,6 +16,7 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchARMo
       modelUrl: '',
       modelXLocation: '',
       modelYLocation: '',
+      modelZLocation: '',
       modelFloor: '',
       xScale: '',
       yScale: '',
@@ -29,6 +30,7 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchARMo
         values.modelUrl,
         values.modelXLocation,
         values.modelYLocation,
+        values.modelZLocation,
         values.xScale,
         values.yScale,
         values.zScale,
@@ -66,7 +68,7 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchARMo
       open={isOpenFilter}
       onClose={() => toggleDrawer()}
       PaperProps={{
-        sx: { width: 400, border: 'none', overflow: 'hidden', padding: '20px 20px' }
+        sx: { width: 400, border: 'none', overflow: 'overflow', padding: '20px 20px' }
       }}
     >
       <Stack
@@ -123,6 +125,13 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchARMo
           fullWidth
           name="modelYLocation"
           label="Model Y-Location"
+          onChange={handleChange}
+          style={{ marginBottom: '15px' }}
+        />
+        <TextField
+          fullWidth
+          name="modelZLocation"
+          label="Model Z-Location"
           onChange={handleChange}
           style={{ marginBottom: '15px' }}
         />

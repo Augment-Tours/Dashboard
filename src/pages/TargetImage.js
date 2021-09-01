@@ -35,7 +35,8 @@ const TABLE_HEAD = [
   { id: 'name', label: 'Target Image Info', alignRight: false },
   { id: 'floor', label: 'Floor', alignRight: false },
   { id: 'link', label: 'Link', alignRight: false },
-  { id: 'museum', label: 'Museum Name', alignRight: false }
+  { id: 'museum', label: 'Museum Name', alignRight: false },
+  { id: 'type', label: 'Target Type', alignRight: false },
 ];
 
 // ----------------------------------------------------------------------
@@ -212,6 +213,7 @@ export default function Museum() {
                             <a href={model}>Link</a>
                           </TableCell>
                           <TableCell align="left">5 Killo</TableCell>
+                          <TableCell align="left">Museum</TableCell>
                           <TableCell align="right">
                             <UserMoreMenu />
                           </TableCell>
