@@ -43,7 +43,7 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchMuse
     <Drawer
       anchor="right"
       open={isOpenFilter}
-      onClose={() => {}}
+      onClose={() => toggleDrawer()}
       PaperProps={{
         sx: { width: 400, border: 'none', overflow: 'hidden', padding: '20px 20px' }
       }}

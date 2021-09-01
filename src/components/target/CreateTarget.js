@@ -19,7 +19,7 @@ const CreateTarget = ({ toggleDrawer, isDrawerOpen, setIsDrawerOpen, refetchTarg
     <Drawer
       anchor="right"
       open={isDrawerOpen}
-      onClose={() => {}}
+      onClose={() => toggleDrawer()}
       PaperProps={{
         sx: { width: 400, border: 'none', overflow: 'hidden', padding: '20px 20px' }
       }}
