@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const getAllArModels = async () => {
-  const url = 'http://localhost:3000/armodels/';
+  const url = `${process.env.REACT_APP_BACKEND}/armodels/`;
   return axios
     .get(url)
     .then((res) => res.data)
@@ -23,7 +23,7 @@ const createArModel = async (
   floor,
   museums_id
 ) => {
-  const url = 'http://localhost:3000/armodels/';
+  const url = `${process.env.REACT_APP_BACKEND}/armodels/`;
   return axios.post(url, {
     name,
     description,

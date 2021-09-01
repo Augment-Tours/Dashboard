@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const getAccountByEmail = async (email) => {
-  const url = `http://localhost:3000/accounts/getBy/email?email=${email}`;
+  const url = `${process.env.REACT_APP_BACKEND}/accounts/getBy/email?email=${email}`;
   return axios
     .get(url)
     .then((res) => res.data)

@@ -1,22 +1,63 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Drawer, Stack, Typography, IconButton, Icon, TextField, Button } from '@material-ui/core';
 import closeFill from '@iconify/icons-eva/close-fill';
-import { Link as RouterLink } from 'react-router-dom';
+// import { Link as RouterLink } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import { createArModel } from '../../pages/request/armodel';
 
 const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer }) => {
-  const [modelName, setModelName] = useState('');
-  const [modelDescription, setModelDescription] = useState('');
-  const [modelUrl, setModelURL] = useState('');
-  const [modelXLocation, setXLocation] = useState('');
-  const [modelYLocation, setYLocation] = useState('');
-  const [modelFloor, setFloor] = useState('');
-  const [xScale, setXScale] = useState(0);
-  const [yScale, setYScale] = useState(0);
-  const [zScale, setZScale] = useState(0);
-  const [museumId, setMuseumId] = useState('');
+  const { errors, handleSubmit, handleChange } = useFormik({
+    initialValues: {
+      modelName: '',
+      modelDescription: '',
+      modelUrl: '',
+      modelXLocation: '',
+      modelYLocation: '',
+      modelFloor: '',
+      xScale: '',
+      yScale: '',
+      zScale: '',
+      museumId: ''
+    },
+    onSubmit: (values) => {
+      createArModel(
+        values.modelDescription,
+        values.modelName,
+        values.modelUrl,
+        values.modelXLocation,
+        values.modelYLocation,
+        values.xScale,
+        values.yScale,
+        values.zScale,
+        values.modelFloor,
+        values.museumId
+      )
+        .then((res) => {
+          console.log(res);
+          setIsOpenFilter(false);
+        })
+        .catch((e) => console.log(e));
+      // console.log(values);
+    },
+    validationSchema: () =>
+      Yup.object().shape({
+        modelName: Yup.string().required(),
+        modelDescription: Yup.string().required(),
+        modelUrl: Yup.string().url().required(),
+        modelXLocation: Yup.number().required(),
+        modelYLocation: Yup.number().required(),
+        modelFloor: Yup.number().required(),
+        xScale: Yup.number().required(),
+        yScale: Yup.number().required(),
+        zScale: Yup.number().required(),
+        museumId: Yup.number().required()
+      })
+  });
+
+  console.log(errors);
 
   return (
     <Drawer
@@ -40,118 +81,83 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer }) => {
           <Icon icon={closeFill} width={20} height={20} />
         </IconButton>
       </Stack>
-      <TextField
-        fullWidth
-        label="Model Name"
-        onChange={(e) => {
-          setModelName(e.target.value);
-        }}
-        style={{ marginBottom: '15px' }}
-      />
-      <TextField
-        fullWidth
-        label="Model Description"
-        onChange={(e) => {
-          setModelDescription(e.target.value);
-        }}
-        style={{ marginBottom: '15px' }}
-      />
-      <TextField
-        fullWidth
-        label="Model URL"
-        onChange={(e) => {
-          setModelURL(e.target.value);
-        }}
-        style={{ marginBottom: '15px' }}
-      />
+      <form onSubmit={handleSubmit}>
+        <TextField
+          fullWidth
+          name="modelName"
+          label="Model Name"
+          onChange={handleChange}
+          style={{ marginBottom: '15px' }}
+        />
+        <TextField
+          fullWidth
+          name="modelDescription"
+          label="Model Description"
+          onChange={handleChange}
+          style={{ marginBottom: '15px' }}
+        />
+        <TextField
+          fullWidth
+          name="modelUrl"
+          label="Model URL"
+          onChange={handleChange}
+          style={{ marginBottom: '15px' }}
+        />
 
-      <TextField
-        fullWidth
-        label="Museum Id"
-        onChange={(e) => {
-          setMuseumId(e.target.value);
-        }}
-        style={{ marginBottom: '15px' }}
-      />
-      <TextField
-        fullWidth
-        label="Model X-Location"
-        onChange={(e) => {
-          setXLocation(e.target.value);
-        }}
-        style={{ marginBottom: '15px' }}
-      />
-      <TextField
-        fullWidth
-        label="Model Y-Location"
-        onChange={(e) => {
-          setYLocation(e.target.value);
-        }}
-        style={{ marginBottom: '15px' }}
-      />
-      <TextField
-        fullWidth
-        label="Model X-Scale"
-        onChange={(e) => {
-          setXScale(e.target.value);
-        }}
-        style={{ marginBottom: '15px' }}
-      />
-      <TextField
-        fullWidth
-        label="Model Y-Scale"
-        onChange={(e) => {
-          setYScale(e.target.value);
-        }}
-        style={{ marginBottom: '15px' }}
-      />
-      <TextField
-        fullWidth
-        label="Model Z-Scale"
-        onChange={(e) => {
-          setZScale(e.target.value);
-        }}
-        style={{ marginBottom: '15px' }}
-      />
-      <TextField
-        fullWidth
-        label="Model Floor"
-        onChange={(e) => {
-          setFloor(e.target.value);
-        }}
-        style={{ marginBottom: '15px' }}
-      />
-      {/* <Button variant="contained" component="label" style={{ marginBottom: '40px' }}>
-            Upload File
-            <input type="file" hidden />
-          </Button> */}
-
-      <Button
-        variant="contained"
-        component={RouterLink}
-        to="#"
-        onClick={() => {
-          createArModel(
-            modelName,
-            modelDescription,
-            modelUrl,
-            modelXLocation,
-            modelYLocation,
-            xScale,
-            yScale,
-            zScale,
-            modelFloor,
-            museumId
-          )
-            .then((res) => {
-              console.log(res);
-              setIsOpenFilter(false);
-            })
-            .catch((e) => console.log(e));
-        }}
-      >
-        Save
-      </Button>
+        <TextField
+          fullWidth
+          name="museumId"
+          label="Museum Id"
+          onChange={handleChange}
+          style={{ marginBottom: '15px' }}
+        />
+        <TextField
+          fullWidth
+          name="modelXLocation"
+          label="Model X-Location"
+          onChange={handleChange}
+          style={{ marginBottom: '15px' }}
+        />
+        <TextField
+          fullWidth
+          name="modelYLocation"
+          label="Model Y-Location"
+          onChange={handleChange}
+          style={{ marginBottom: '15px' }}
+        />
+        <TextField
+          fullWidth
+          name="xScale"
+          label="Model X-Scale"
+          onChange={handleChange}
+          style={{ marginBottom: '15px' }}
+        />
+        <TextField
+          fullWidth
+          name="yScale"
+          label="Model Y-Scale"
+          onChange={handleChange}
+          style={{ marginBottom: '15px' }}
+        />
+        <TextField
+          fullWidth
+          name="zScale"
+          label="Model Z-Scale"
+          onChange={handleChange}
+          style={{ marginBottom: '15px' }}
+        />
+        <TextField
+          fullWidth
+          name="modelFloor"
+          label="Model Floor"
+          onChange={handleChange}
+          style={{ marginBottom: '15px' }}
+        />
+        <p>{Object.entries(errors).length > 0 && Object.entries(errors)[0][1]}</p>
+        <Button variant="contained" type="submit">
+          Save
+        </Button>
+      </form>
     </Drawer>
   );
 };

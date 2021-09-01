@@ -3,7 +3,6 @@ import { Icon } from '@iconify/react';
 // import { sentenceCase } from 'change-case';
 import { useState, useEffect } from 'react';
 import plusFill from '@iconify/icons-eva/plus-fill';
-import closeFill from '@iconify/icons-eva/close-fill';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import {
@@ -13,16 +12,13 @@ import {
   Avatar,
   Button,
   Checkbox,
-  IconButton,
   TableRow,
   TableBody,
   TableCell,
-  TextField,
   Container,
   Typography,
   TableContainer,
-  TablePagination,
-  Drawer
+  TablePagination
 } from '@material-ui/core';
 // components
 import Page from '../components/Page';
@@ -32,7 +28,8 @@ import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dashboard/user';
 //
 // import USERLIST from '../_mocks_/user';
-import { getAllMuseums, createMuseum } from './request/museum';
+import { getAllMuseums } from './request/museum';
+import CreateDrawer from '../components/museum/CreateDrawer';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
@@ -81,10 +78,6 @@ export default function Museum() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [isOpenFilter, setIsOpenFilter] = useState(false);
   const [museumList, setMuseumList] = useState([]);
-
-  const [museumName, setMuseumName] = useState('');
-  const [description, setDescription] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
 
   useEffect(() => {
     const museumList = getAllMuseums(1).then((res) => {
@@ -254,70 +247,11 @@ export default function Museum() {
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </Card>
-        <Drawer
-          anchor="right"
-          open={isOpenFilter}
-          onClose={() => {}}
-          PaperProps={{
-            sx: { width: 400, border: 'none', overflow: 'hidden', padding: '20px 20px' }
-          }}
-        >
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-            sx={{ px: 1, py: 2 }}
-          >
-            <Typography variant="subtitle1" sx={{ ml: 1 }}>
-              Add Museum
-            </Typography>
-            <IconButton onClick={toggleDrawer}>
-              <Icon icon={closeFill} width={20} height={20} />
-            </IconButton>
-          </Stack>
-          <TextField
-            fullWidth
-            label="Museum"
-            onChange={(e) => {
-              setMuseumName(e.target.value);
-            }}
-            value={museumName}
-            style={{ marginBottom: '15px' }}
-          />
-          <TextField
-            fullWidth
-            label="Description"
-            style={{ marginBottom: '15px' }}
-            onChange={(e) => {
-              setDescription(e.target.value);
-            }}
-            value={description}
-          />
-          <TextField
-            fullWidth
-            label="Image URL"
-            style={{ marginBottom: '30px' }}
-            onChange={(e) => {
-              setImageUrl(e.target.value);
-            }}
-            value={imageUrl}
-          />
-
-          <Button
-            variant="contained"
-            component={RouterLink}
-            to="#"
-            onClick={() => {
-              createMuseum(museumName, description, imageUrl)
-                .then((res) => {
-                  console.log(res);
-                })
-                .catch((e) => console.log(e));
-            }}
-          >
-            Add
-          </Button>
-        </Drawer>
+        <CreateDrawer
+          isOpenFilter={isOpenFilter}
+          setIsOpenFilter={setIsOpenFilter}
+          toggleDrawer={toggleDrawer}
+        />
       </Container>
     </Page>
   );

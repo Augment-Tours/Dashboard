@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const getAllTargets = async () => {
-  const url = 'http://localhost:3000/targets/';
+  const url = `${process.env.REACT_APP_BACKEND}/targets/`;
   return axios
     .get(url)
     .then((res) => res.data)
@@ -12,7 +12,7 @@ const getAllTargets = async () => {
 
 /* eslint-disable camelcase */
 const createTargetImage = async (information, model, x_location, y_location, floor, museums_id) => {
-  const url = 'http://localhost:3000/targets/';
+  const url = `${process.env.REACT_APP_BACKEND}/targets/`;
   return axios.post(url, { information, model, x_location, y_location, floor, museums_id });
 };
 

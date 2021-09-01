@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const getAllMuseums = async () => {
-  const url = 'http://localhost:3000/museums/';
+  const url = `${process.env.REACT_APP_BACKEND}/museums/`;
   return axios
     .get(url)
     .then((res) => res.data)
@@ -11,7 +11,7 @@ const getAllMuseums = async () => {
 };
 
 const createMuseum = async (name, description, image) => {
-  const url = 'http://localhost:3000/museums/';
+  const url = `${process.env.REACT_APP_BACKEND}/museums/`;
   return axios.post(url, { name, description, image });
 };
 
