@@ -35,7 +35,8 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchARMo
       xScale: '',
       yScale: '',
       zScale: '',
-      museumId: ''
+      museumId: '',
+      image: ''
     },
     onSubmit: (values) => {
       createArModel(
@@ -49,7 +50,8 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchARMo
         values.yScale,
         values.zScale,
         values.modelFloor,
-        values.museumId
+        values.museumId,
+        values.image
       )
         .then((res) => {
           console.log(res);
@@ -66,11 +68,13 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchARMo
         modelUrl: Yup.string().url().required(),
         modelXLocation: Yup.number().required(),
         modelYLocation: Yup.number().required(),
+        modelZLocation: Yup.number().required(),
         modelFloor: Yup.number().required(),
         xScale: Yup.number().required(),
         yScale: Yup.number().required(),
         zScale: Yup.number().required(),
-        museumId: Yup.string().required()
+        museumId: Yup.string().required(),
+        image: Yup.string().url().required()
       })
   });
 
@@ -186,6 +190,13 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchARMo
           fullWidth
           name="modelFloor"
           label="Model Floor"
+          onChange={handleChange}
+          style={{ marginBottom: '15px' }}
+        />
+        <TextField
+          fullWidth
+          name="image"
+          label="Image"
           onChange={handleChange}
           style={{ marginBottom: '15px' }}
         />

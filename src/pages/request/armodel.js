@@ -22,7 +22,8 @@ const createArModel = async (
   y_scale,
   z_scale,
   floor,
-  museums_id
+  museums_id,
+  image
 ) => {
   const url = `${process.env.REACT_APP_BACKEND}/armodels/`;
   return axios.post(url, {
@@ -36,7 +37,8 @@ const createArModel = async (
     x_scale,
     y_scale,
     z_scale,
-    museums_id
+    museums_id,
+    image
   });
 };
 
