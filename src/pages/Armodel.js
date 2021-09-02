@@ -40,7 +40,7 @@ const TABLE_HEAD = [
   { id: 'y_location', label: 'Y-Location', alignRight: false },
   { id: 'floor', label: 'Floor', alignRight: false },
   { id: 'museum', label: 'Museum Name', alignRight: false },
-  { id: 'target', label: 'Target Name', alignRight: false }
+  // { id: 'target', label: 'Target Name', alignRight: false }
 ];
 
 // ----------------------------------------------------------------------
@@ -222,6 +222,8 @@ export default function ArModel() {
                           <TableCell align="left">{x_location}</TableCell>
                           <TableCell align="left">{y_location}</TableCell>
                           <TableCell align="left">{floor}</TableCell>
+                          <TableCell align="left">Ethnological Museum</TableCell>
+                          {/* <TableCell align="left"></TableCell> */}
                           <TableCell align="right">
                             <UserMoreMenu />
                           </TableCell>
