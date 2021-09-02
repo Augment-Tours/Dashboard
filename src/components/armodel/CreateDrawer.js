@@ -1,14 +1,28 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { Drawer, Stack, Typography, IconButton, Icon, TextField, Button } from '@material-ui/core';
+import {
+  Drawer,
+  Stack,
+  Typography,
+  IconButton,
+  Icon,
+  TextField,
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem
+} from '@material-ui/core';
 import closeFill from '@iconify/icons-eva/close-fill';
 // import { Link as RouterLink } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { createArModel } from '../../pages/request/armodel';
+import { getAllMuseums } from '../../pages/request/museum';
 
 const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchARModels }) => {
+  const [museumList, setMuseumList] = useState([]);
   const { errors, handleSubmit, handleChange } = useFormik({
     initialValues: {
       modelName: '',
@@ -62,6 +76,15 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchARMo
 
   console.log(errors);
 
+  useEffect(() => {
+    getAllMuseums().then((res) => {
+      // console.log(res);
+      setMuseumList(res);
+    });
+  }, []);
+
+  // console.log(museumList);
+
   return (
     <Drawer
       anchor="right"
@@ -107,13 +130,16 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchARMo
           style={{ marginBottom: '15px' }}
         />
 
-        <TextField
-          fullWidth
-          name="museumId"
-          label="Museum Id"
-          onChange={handleChange}
-          style={{ marginBottom: '15px' }}
-        />
+        <FormControl fullWidth variant="outlined" style={{ marginBottom: '15px' }}>
+          <InputLabel>Museum</InputLabel>
+          <Select name="museumId" onChange={handleChange} label="Country">
+            {museumList.map((museum) => (
+              <MenuItem key={museum.id} value={museum.id}>
+                {museum.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <TextField
           fullWidth
           name="modelXLocation"

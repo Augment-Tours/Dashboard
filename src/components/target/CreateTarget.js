@@ -1,12 +1,24 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
-import { Drawer, IconButton, Stack, Typography, TextField, Button } from '@material-ui/core';
+import {
+  Drawer,
+  IconButton,
+  Stack,
+  Typography,
+  TextField,
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select
+} from '@material-ui/core';
 import closeFill from '@iconify/icons-eva/close-fill';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import Icon from '@iconify/react';
 
 import { createTargetImage } from '../../pages/request/target';
+import { getAllMuseums } from '../../pages/request/museum';
 
 const CreateTarget = ({ toggleDrawer, isDrawerOpen, setIsDrawerOpen, refetchTargetImages }) => {
   const [information, setInformation] = useState('');
@@ -15,6 +27,15 @@ const CreateTarget = ({ toggleDrawer, isDrawerOpen, setIsDrawerOpen, refetchTarg
   const [y_location, setY_location] = useState(0);
   const [floor, setFloor] = useState(0);
   const [museums_id, setMuseums_id] = useState('');
+  const [museumList, setMuseumList] = useState([]);
+
+  useEffect(() => {
+    getAllMuseums().then((res) => {
+      // console.log(res);
+      setMuseumList(res);
+    });
+  }, []);
+
   return (
     <Drawer
       anchor="right"
@@ -37,15 +58,16 @@ const CreateTarget = ({ toggleDrawer, isDrawerOpen, setIsDrawerOpen, refetchTarg
           <Icon icon={closeFill} width={20} height={20} />
         </IconButton>
       </Stack>
-      <TextField
-        fullWidth
-        label="Museum Id"
-        onChange={(e) => {
-          setMuseums_id(e.target.value);
-        }}
-        value={museums_id}
-        style={{ marginBottom: '15px' }}
-      />
+      <FormControl fullWidth variant="outlined" style={{ marginBottom: '15px' }}>
+        <InputLabel>Museum</InputLabel>
+        <Select name="museumId" onChange={(e) => setMuseums_id(e.target.value)} label="Country">
+          {museumList.map((museum) => (
+            <MenuItem key={museum.id} value={museum.id}>
+              {museum.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       <TextField
         fullWidth
         label="Information"
