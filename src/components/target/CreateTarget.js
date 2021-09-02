@@ -23,6 +23,7 @@ import { getAllMuseums } from '../../pages/request/museum';
 const CreateTarget = ({ toggleDrawer, isDrawerOpen, setIsDrawerOpen, refetchTargetImages }) => {
   const [information, setInformation] = useState('');
   const [targetImageUrl, setTargetImageUrl] = useState('');
+  const [type, setType] = useState('');
   const [x_location, setX_location] = useState(0);
   const [y_location, setY_location] = useState(0);
   const [floor, setFloor] = useState(0);
@@ -116,13 +117,30 @@ const CreateTarget = ({ toggleDrawer, isDrawerOpen, setIsDrawerOpen, refetchTarg
         value={floor}
         style={{ marginBottom: '15px' }}
       />
+      <FormControl fullWidth variant="outlined" style={{ marginBottom: '15px' }}>
+        <InputLabel>Type</InputLabel>
+        <Select name="museumId" onChange={(e) => setType(e.target.value)} label="--Type">
+          {/* {museumList.map((museum) => ( */}
+          <MenuItem value="museums">Museum</MenuItem>
+          <MenuItem value="armodels">Ar Model</MenuItem>
+          {/* ))} */}
+        </Select>
+      </FormControl>
 
       <Button
         variant="contained"
         component={RouterLink}
         to="#"
         onClick={() => {
-          createTargetImage(information, targetImageUrl, x_location, y_location, floor, museums_id)
+          createTargetImage(
+            information,
+            targetImageUrl,
+            x_location,
+            y_location,
+            floor,
+            museums_id,
+            type
+          )
             .then((res) => {
               console.log(res);
               setIsDrawerOpen(false);

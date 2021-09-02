@@ -11,9 +11,17 @@ const getAllTargets = async () => {
 };
 
 /* eslint-disable camelcase */
-const createTargetImage = async (information, model, x_location, y_location, floor, museums_id) => {
+const createTargetImage = async (
+  information,
+  model,
+  x_location,
+  y_location,
+  floor,
+  museums_id,
+  type
+) => {
   const url = `${process.env.REACT_APP_BACKEND}/targets/`;
-  return axios.post(url, { information, model, x_location, y_location, floor, museums_id });
+  return axios.post(url, { information, model, x_location, y_location, floor, museums_id, type });
 };
 
 export { getAllTargets, createTargetImage };
