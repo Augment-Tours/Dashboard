@@ -5,10 +5,10 @@ import DashboardLayout from './layouts/dashboard';
 import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 //
 import Login from './pages/Login';
-import Register from './pages/Register';
+// import Register from './pages/Register';
 import DashboardApp from './pages/DashboardApp';
 // import Products from './pages/Products';
-import Blog from './pages/Blog';
+// import Blog from './pages/Blog';
 import User from './pages/User';
 import NotFound from './pages/Page404';
 import Museum from './pages/Museum';
@@ -28,7 +28,7 @@ export default function Router() {
         { path: '/', element: <PrivateRoute component={Navigate} to="/dashboard/app" replace /> },
         { path: 'app', element: <PrivateRoute component={DashboardApp} /> },
         { path: 'user', element: <PrivateRoute component={User} /> },
-        { path: 'blog', element: <PrivateRoute component={Blog} /> },
+        // { path: 'blog', element: <PrivateRoute component={Blog} /> },
         { path: 'museums', element: <PrivateRoute component={Museum} /> },
         { path: 'ar-models', element: <PrivateRoute component={ARModel} /> },
         { path: 'target-images', element: <PrivateRoute component={TargetImage} /> },
@@ -40,7 +40,7 @@ export default function Router() {
       element: <LogoOnlyLayout />,
       children: [
         { path: 'login', element: <Login /> },
-        { path: 'register', element: <Register /> },
+        // { path: 'register', element: <Register /> },
         { path: '404', element: <NotFound /> },
         { path: '/', element: <Navigate to="/dashboard" /> },
         { path: '*', element: <Navigate to="/404" /> }

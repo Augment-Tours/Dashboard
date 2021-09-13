@@ -39,7 +39,7 @@ const TABLE_HEAD = [
   { id: 'x_location', label: 'X-Location', alignRight: false },
   { id: 'y_location', label: 'Y-Location', alignRight: false },
   { id: 'floor', label: 'Floor', alignRight: false },
-  { id: 'museum', label: 'Museum Name', alignRight: false },
+  { id: 'museum', label: 'Museum Name', alignRight: false }
   // { id: 'target', label: 'Target Name', alignRight: false }
 ];
 

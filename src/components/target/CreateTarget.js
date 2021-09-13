@@ -59,11 +59,16 @@ const CreateTarget = ({ toggleDrawer, isDrawerOpen, setIsDrawerOpen, refetchTarg
           <Icon icon={closeFill} width={20} height={20} />
         </IconButton>
       </Stack>
-      <FormControl fullWidth variant="outlined" style={{ marginBottom: '15px' }}>
+      <FormControl
+        fullWidth
+        variant="outlined"
+        style={{ marginBottom: '15px' }}
+        augment-input="museum"
+      >
         <InputLabel>Museum</InputLabel>
         <Select name="museumId" onChange={(e) => setMuseums_id(e.target.value)} label="Country">
           {museumList.map((museum) => (
-            <MenuItem key={museum.id} value={museum.id}>
+            <MenuItem augment-input={`${museum.name}`} key={museum.id} value={museum.id}>
               {museum.name}
             </MenuItem>
           ))}
@@ -77,6 +82,7 @@ const CreateTarget = ({ toggleDrawer, isDrawerOpen, setIsDrawerOpen, refetchTarg
         }}
         value={information}
         style={{ marginBottom: '15px' }}
+        augment-input="info"
       />
       <TextField
         fullWidth
@@ -86,6 +92,7 @@ const CreateTarget = ({ toggleDrawer, isDrawerOpen, setIsDrawerOpen, refetchTarg
         }}
         value={targetImageUrl}
         style={{ marginBottom: '15px' }}
+        augment-input="target-url"
       />
       <TextField
         fullWidth
@@ -96,6 +103,7 @@ const CreateTarget = ({ toggleDrawer, isDrawerOpen, setIsDrawerOpen, refetchTarg
         }}
         value={x_location}
         style={{ marginBottom: '15px' }}
+        augment-input="target-x-loc"
       />
       <TextField
         fullWidth
@@ -106,6 +114,7 @@ const CreateTarget = ({ toggleDrawer, isDrawerOpen, setIsDrawerOpen, refetchTarg
         }}
         value={y_location}
         style={{ marginBottom: '15px' }}
+        augment-input="target-y-loc"
       />
       <TextField
         fullWidth
@@ -116,13 +125,23 @@ const CreateTarget = ({ toggleDrawer, isDrawerOpen, setIsDrawerOpen, refetchTarg
         }}
         value={floor}
         style={{ marginBottom: '15px' }}
+        augment-input="target-floor"
       />
-      <FormControl fullWidth variant="outlined" style={{ marginBottom: '15px' }}>
+      <FormControl
+        fullWidth
+        variant="outlined"
+        style={{ marginBottom: '15px' }}
+        augment-input="target-type"
+      >
         <InputLabel>Type</InputLabel>
         <Select name="museumId" onChange={(e) => setType(e.target.value)} label="--Type">
           {/* {museumList.map((museum) => ( */}
-          <MenuItem value="museums">Museum</MenuItem>
-          <MenuItem value="armodels">Ar Model</MenuItem>
+          <MenuItem value="museums" augment-input="target-type-museum">
+            Museum
+          </MenuItem>
+          <MenuItem value="armodels" augment-input="target-type-model">
+            Ar Model
+          </MenuItem>
           {/* ))} */}
         </Select>
       </FormControl>
@@ -131,6 +150,7 @@ const CreateTarget = ({ toggleDrawer, isDrawerOpen, setIsDrawerOpen, refetchTarg
         variant="contained"
         component={RouterLink}
         to="#"
+        augment-button="create-target-image"
         onClick={() => {
           createTargetImage(
             information,

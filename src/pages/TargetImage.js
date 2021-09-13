@@ -160,6 +160,7 @@ export default function Museum() {
             component={RouterLink}
             to="#"
             onClick={toggleDrawer}
+            augment-button="new-target-image"
             startIcon={<Icon icon={plusFill} />}
           >
             New Target Image
