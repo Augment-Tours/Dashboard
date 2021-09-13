@@ -5,9 +5,10 @@
   "version": "1.0.0",
   "private": false,
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts -r @cypress/instrument-cra start",
+    "cy:open": "cypress open",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "cypress run",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js,.jsx ./src",
     "lint:fix": "eslint --fix --ext .js,.jsx ./src"
@@ -36,6 +37,7 @@
     ]
   },
   "dependencies": {
+    "@cypress/instrument-cra": "^1.4.0",
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
     "@iconify/icons-ant-design": "^1.1.0",
@@ -74,6 +76,7 @@
   "devDependencies": {
     "@babel/core": "^7.14.6",
     "@babel/eslint-parser": "^7.14.7",
+    "@cypress/code-coverage": "^3.9.11",
     "cypress": "^8.3.0",
     "eslint": "^7.29.0",
     "eslint-config-airbnb": "^18.2.1",
@@ -86,5 +89,21 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "^2.3.2"
+  },
+  "nyc": {
+    "exclude": [
+      "src/utils/*.js",
+      "src/components/animate/**/*.js",
+      "src/components/charts/**/*.js",
+      "src/components/_dashboard/app/AppConversionRates.js",
+      "src/components/_dashboard/app/AppCurrentSubject.js",
+      "src/components/_dashboard/app/AppCurrentVisits.js",
+      "src/components/_dashboard/app/AppOrderTimeline.js",
+      "src/components/_dashboard/app/AppTasks.js",
+      "src/components/_dashboard/app/AppTrafficBySite.js",
+      "src/components/_dashboard/app/AppWebsiteVisits.js",
+      "src/components/_dashboard/app/AppNewsUpdate.js"
+    ],
+    "excludeAfterRemap": true
   }
 }
