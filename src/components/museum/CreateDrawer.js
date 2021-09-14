@@ -66,6 +66,7 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchMuse
           fullWidth
           name="museumName"
           label="Museum"
+          augment-input="museum-name"
           onChange={handleChange}
           style={{ marginBottom: '15px' }}
         />
@@ -73,6 +74,7 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchMuse
           fullWidth
           name="description"
           label="Description"
+          augment-input="museum-description"
           style={{ marginBottom: '15px' }}
           onChange={handleChange}
         />
@@ -80,11 +82,12 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchMuse
           fullWidth
           name="imageUrl"
           label="Image URL"
+          augment-input="museum-image-url"
           sx={{ mb: 2 }}
           onChange={handleChange}
         />
         <p>{Object.entries(errors).length > 0 && Object.entries(errors)[0][1]}</p>
-        <Button variant="contained" type="submit">
+        <Button augment-button="create-museum" variant="contained" type="submit">
           Add
         </Button>
       </form>

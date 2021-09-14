@@ -158,6 +158,7 @@ export default function Museum() {
             variant="contained"
             component={RouterLink}
             to="#"
+            augment-button="new-museum"
             onClick={toggleDrawer}
             startIcon={<Icon icon={plusFill} />}
           >

@@ -102,7 +102,9 @@
       "src/components/_dashboard/app/AppTasks.js",
       "src/components/_dashboard/app/AppTrafficBySite.js",
       "src/components/_dashboard/app/AppWebsiteVisits.js",
-      "src/components/_dashboard/app/AppNewsUpdate.js"
+      "src/components/_dashboard/app/AppNewsUpdate.js",
+      "src/serviceWorker.js",
+      "src/reportWebVitals.js"
     ],
     "excludeAfterRemap": true
   }
