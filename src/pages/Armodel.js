@@ -205,7 +205,16 @@ export default function ArModel() {
                   {filteredModels
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { id, name, description, x_location, y_location, floor, model } = row;
+                      const {
+                        id,
+                        name,
+                        description,
+                        x_location,
+                        y_location,
+                        floor,
+                        model,
+                        museumName
+                      } = row;
                       const isItemSelected = selected.indexOf(name) !== -1;
 
                       return (
@@ -231,7 +240,7 @@ export default function ArModel() {
                           <TableCell align="left">{x_location}</TableCell>
                           <TableCell align="left">{y_location}</TableCell>
                           <TableCell align="left">{floor}</TableCell>
-                          <TableCell align="left">Ethnological Museum</TableCell>
+                          <TableCell align="left">{museumName}</TableCell>
                           {/* <TableCell align="left"></TableCell> */}
                           <TableCell align="right">
                             <UserMoreMenu toggleEditDrawer={() => toggleDrawerEdit(id)} />
