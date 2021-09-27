@@ -30,6 +30,16 @@ const CreateTarget = ({ toggleDrawer, isDrawerOpen, setIsDrawerOpen, refetchTarg
   const [museums_id, setMuseums_id] = useState('');
   const [museumList, setMuseumList] = useState([]);
 
+  const clearFields = () => {
+    setInformation('');
+    setTargetImageUrl('');
+    setType('');
+    setX_location('');
+    setY_location('');
+    setFloor('');
+    setMuseums_id('');
+  };
+
   useEffect(() => {
     getAllMuseums().then((res) => {
       // console.log(res);
@@ -41,7 +51,10 @@ const CreateTarget = ({ toggleDrawer, isDrawerOpen, setIsDrawerOpen, refetchTarg
     <Drawer
       anchor="right"
       open={isDrawerOpen}
-      onClose={() => toggleDrawer()}
+      onClose={() => {
+        toggleDrawer();
+        clearFields();
+      }}
       PaperProps={{
         sx: { width: 400, border: 'none', overflow: 'hidden', padding: '20px 20px' }
       }}
@@ -163,6 +176,7 @@ const CreateTarget = ({ toggleDrawer, isDrawerOpen, setIsDrawerOpen, refetchTarg
           )
             .then((res) => {
               console.log(res);
+              clearFields();
               setIsDrawerOpen(false);
               refetchTargetImages();
             })

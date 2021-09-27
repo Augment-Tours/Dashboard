@@ -11,6 +11,17 @@ const getAllArModels = async () => {
     });
 };
 
+const getArModelDetail = async (id) => {
+  const url = `${process.env.REACT_APP_BACKEND}/armodels/${id}`;
+  console.log(url);
+  return axios
+    .get(url)
+    .then((res) => res.data)
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 const createArModel = async (
   name,
   description,
@@ -42,4 +53,4 @@ const createArModel = async (
   });
 };
 
-export { getAllArModels, createArModel };
+export { getAllArModels, getArModelDetail, createArModel };
