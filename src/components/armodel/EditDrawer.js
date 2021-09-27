@@ -18,7 +18,7 @@ import closeFill from '@iconify/icons-eva/close-fill';
 // import { Link as RouterLink } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { createArModel, getArModelDetail } from '../../pages/request/armodel';
+import { editArModel, getArModelDetail } from '../../pages/request/armodel';
 import { getAllMuseums } from '../../pages/request/museum';
 
 const EditDrawer = ({
@@ -33,7 +33,8 @@ const EditDrawer = ({
   const formik = useFormik({
     initialValues: { ...arModel },
     onSubmit: (values) => {
-      createArModel(
+      editArModel(
+        arModelId,
         values.modelName,
         values.modelDescription,
         values.modelUrl,
