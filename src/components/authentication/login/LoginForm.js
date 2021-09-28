@@ -56,7 +56,7 @@ export default function LoginForm() {
           });
         })
         .catch(() => {
-          setErrorMessage('* Invalid credentials');
+          ErrorMessageset('* Invalid credentials');
           formik.setSubmitting(false);
         });
     }
