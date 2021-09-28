@@ -116,6 +116,7 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchARMo
           fullWidth
           name="modelName"
           label="Model Name"
+          augment-input="armodel-name"
           onChange={handleChange}
           style={{ marginBottom: '15px' }}
         />
@@ -123,6 +124,7 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchARMo
           fullWidth
           name="modelDescription"
           label="Model Description"
+          augment-input="armodel-description"
           onChange={handleChange}
           style={{ marginBottom: '15px' }}
         />
@@ -130,16 +132,17 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchARMo
           fullWidth
           name="modelUrl"
           label="Model URL"
+          augment-input="armodel-url"
           onChange={handleChange}
           style={{ marginBottom: '15px' }}
         />
 
         <FormControl fullWidth variant="outlined" style={{ marginBottom: '15px' }}>
           <InputLabel>Museum</InputLabel>
-          <Select name="museumId" onChange={handleChange} label="Country">
-            {museumList.map((museum) => (
-              <MenuItem key={museum.id} value={museum.id}>
-                {museum.name}
+          <Select name="museumId" onChange={handleChange} label="Country" augment-input="museum">
+            {museumList.map((armodel) => (
+              <MenuItem augment-input={`${armodel.name}`}key={armodel.id} value={armodel.id}>
+                {armodel.name}
               </MenuItem>
             ))}
           </Select>
@@ -148,6 +151,7 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchARMo
           fullWidth
           name="modelXLocation"
           label="Model X-Location"
+          augment-input="armodel-xlocation"
           onChange={handleChange}
           style={{ marginBottom: '15px' }}
         />
@@ -155,6 +159,7 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchARMo
           fullWidth
           name="modelYLocation"
           label="Model Y-Location"
+          augment-input="armodel-ylocation"
           onChange={handleChange}
           style={{ marginBottom: '15px' }}
         />
@@ -162,6 +167,7 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchARMo
           fullWidth
           name="modelZLocation"
           label="Model Z-Location"
+          augment-input="armodel-zlocation"
           onChange={handleChange}
           style={{ marginBottom: '15px' }}
         />
@@ -169,6 +175,7 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchARMo
           fullWidth
           name="xScale"
           label="Model X-Scale"
+          augment-input="armodel-xscale"
           onChange={handleChange}
           style={{ marginBottom: '15px' }}
         />
@@ -176,6 +183,7 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchARMo
           fullWidth
           name="yScale"
           label="Model Y-Scale"
+          augment-input="armodel-yscale"
           onChange={handleChange}
           style={{ marginBottom: '15px' }}
         />
@@ -183,6 +191,7 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchARMo
           fullWidth
           name="zScale"
           label="Model Z-Scale"
+          augment-input="armodel-zscale"
           onChange={handleChange}
           style={{ marginBottom: '15px' }}
         />
@@ -190,6 +199,7 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchARMo
           fullWidth
           name="modelFloor"
           label="Model Floor"
+          augment-input="armodel-floor"
           onChange={handleChange}
           style={{ marginBottom: '15px' }}
         />
@@ -197,11 +207,12 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchARMo
           fullWidth
           name="image"
           label="Image"
+          augment-input="armodel-image"
           onChange={handleChange}
           style={{ marginBottom: '15px' }}
         />
-        <p>{Object.entries(errors).length > 0 && Object.entries(errors)[0][1]}</p>
-        <Button variant="contained" type="submit">
+        <p augment-text="armodelerror">{Object.entries(errors).length > 0 && Object.entries(errors)[0][1]}</p>
+        <Button augment-button="create-armodel" variant="contained" type="submit">
           Save
         </Button>
       </form>

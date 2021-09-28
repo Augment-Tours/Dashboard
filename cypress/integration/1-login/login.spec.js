@@ -6,7 +6,7 @@ describe('Augment Tours Dashboard', () => {
     cy.get('[augment-input="username"]').type('aman.teferi.80@gmail.com');
     cy.get('[augment-input="password"]').type('123456');
     cy.get('[augment-input="login-button"]').click();
-    cy.wait(1000);
+    cy.wait(3000);
     cy.get('[augment-text="welcome"]').should('be.visible');
   });
   it('correct username and incorrect password should not display the dashboard', () => {

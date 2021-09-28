@@ -23,5 +23,7 @@ describe('Augment Tours Dashboard', () => {
     cy.get('[augment-input="5 Killo"]').click();
 
     cy.get('[augment-button="create-target-image"]').click();
+    cy.wait(1000);
+    cy.get('[augment-button="new-armodel"]').should('be.visible');
   });
 });

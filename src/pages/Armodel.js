@@ -166,6 +166,7 @@ export default function ArModel() {
             variant="contained"
             component={RouterLink}
             to="#"
+            augment-button="new-armodel"
             onClick={toggleDrawer}
             startIcon={<Icon icon={plusFill} />}
           >
@@ -192,7 +193,7 @@ export default function ArModel() {
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
                 />
-                <TableBody>
+                <TableBody augment-list="armodel">
                   {filteredModels
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
