@@ -216,7 +216,9 @@ export default function Museum() {
                             </Stack>
                           </TableCell>
                           <TableCell align="left">{description}</TableCell>
-                          <TableCell align="left">Test Location</TableCell>
+                          <TableCell align="left">
+                            <a href={image}>Link</a>
+                          </TableCell>
                           <TableCell align="right">
                             <UserMoreMenu />
                           </TableCell>

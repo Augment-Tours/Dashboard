@@ -42,7 +42,7 @@ export default function AppItemOrders() {
       <IconWrapperStyle>
         <Icon icon={homeOutlined} width={24} height={24} />
       </IconWrapperStyle>
-      <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
+      <Typography variant="h3">{fShortenNumber(2)}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
         Number of Museums
       </Typography>

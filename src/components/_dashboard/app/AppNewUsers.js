@@ -42,7 +42,7 @@ export default function AppNewUsers() {
       <IconWrapperStyle>
         <Icon icon={fileImageOutlined} width={24} height={24} />
       </IconWrapperStyle>
-      <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
+      <Typography variant="h3">{fShortenNumber(5)}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
         Number of Target Images
       </Typography>
