@@ -30,6 +30,7 @@ import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dash
 // import ARMODELLIST from '../_mocks_/user';
 import { getAllArModels } from './request/armodel';
 import CreateDrawer from '../components/armodel/CreateDrawer';
+import EditDrawer from '../components/armodel/EditDrawer';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
@@ -83,6 +84,9 @@ export default function ArModel() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [isOpenFilter, setIsOpenFilter] = useState(false);
   const [arModelList, setArModelList] = useState([]);
+
+  const [armodelId, setArmodelId] = useState('');
+  const [isOpenEditDrawer, setIsOpenEditDrawer] = useState(false);
 
   const fetchARModels = () => {
     getAllArModels(1)
@@ -155,6 +159,11 @@ export default function ArModel() {
     setIsOpenFilter(!isOpenFilter);
   };
 
+  const toggleDrawerEdit = (id) => {
+    setArmodelId(id);
+    setIsOpenEditDrawer(!isOpenEditDrawer);
+  };
+
   return (
     <Page title="AR Models | Augment-Tours">
       <Container>
@@ -197,7 +206,16 @@ export default function ArModel() {
                   {filteredModels
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { id, name, description, x_location, y_location, floor, model } = row;
+                      const {
+                        id,
+                        name,
+                        description,
+                        x_location,
+                        y_location,
+                        floor,
+                        model,
+                        museumName
+                      } = row;
                       const isItemSelected = selected.indexOf(name) !== -1;
 
                       return (
@@ -223,10 +241,10 @@ export default function ArModel() {
                           <TableCell align="left">{x_location}</TableCell>
                           <TableCell align="left">{y_location}</TableCell>
                           <TableCell align="left">{floor}</TableCell>
-                          <TableCell align="left">Ethnological Museum</TableCell>
+                          <TableCell align="left">{museumName}</TableCell>
                           {/* <TableCell align="left"></TableCell> */}
                           <TableCell align="right">
-                            <UserMoreMenu />
+                            <UserMoreMenu toggleEditDrawer={() => toggleDrawerEdit(id)} />
                           </TableCell>
                         </TableRow>
                       );
@@ -264,6 +282,13 @@ export default function ArModel() {
           isOpenFilter={isOpenFilter}
           setIsOpenFilter={setIsOpenFilter}
           toggleDrawer={toggleDrawer}
+          refetchARModels={fetchARModels}
+        />
+        <EditDrawer
+          arModelId={armodelId}
+          isOpenFilter={isOpenEditDrawer}
+          setIsOpenFilter={setIsOpenEditDrawer}
+          toggleDrawer={toggleDrawerEdit}
           refetchARModels={fetchARModels}
         />
       </Container>

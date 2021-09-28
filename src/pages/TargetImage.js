@@ -190,7 +190,7 @@ export default function Museum() {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { id, name, information, model, floor, type } = row;
+                      const { id, name, information, model, floor, type, museumName } = row;
                       const isItemSelected = selected.indexOf(name) !== -1;
 
                       return (
@@ -213,7 +213,7 @@ export default function Museum() {
                           <TableCell align="left">
                             <a href={model}>Link</a>
                           </TableCell>
-                          <TableCell align="left">5 Killo</TableCell>
+                          <TableCell align="left">{museumName}</TableCell>
                           <TableCell align="left">{type}</TableCell>
                           <TableCell align="right">
                             <UserMoreMenu />
