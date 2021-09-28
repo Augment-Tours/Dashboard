@@ -86,7 +86,7 @@ const CreateDrawer = ({ isOpenFilter, setIsOpenFilter, toggleDrawer, refetchMuse
           sx={{ mb: 2 }}
           onChange={handleChange}
         />
-        <p>{Object.entries(errors).length > 0 && Object.entries(errors)[0][1]}</p>
+        <p augment-text="museumerror">{Object.entries(errors).length > 0 && Object.entries(errors)[0][1]}</p>
         <Button augment-button="create-museum" variant="contained" type="submit">
           Add
         </Button>
